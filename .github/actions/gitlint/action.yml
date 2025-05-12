@@ -23,15 +23,14 @@ inputs:
     required: false
 runs:
   using: "docker"
-  image: "jorisroovers/gitlint:0.19.1"
-  entrypoint: /bin/sh
+  image: "Dockerfile"
   args:
     - -c
     - |
       git config --global --add safe.directory /github/workspace && \
       git fetch origin +refs/heads/${{ inputs.base-branch }}:refs/remotes/origin/${{ inputs.base-branch }} && \
       git fetch origin +refs/pull/${{ inputs.pr-number }}/head && \
-      if ! gitlint --commits origin/${{ inputs.base-branch }}..HEAD; then \
+      if ! gitlint --commits origin/${{ inputs.base-branch }}..HEAD --target=/github/workspace; then \
         echo -e "\nWARNING: Your commit message does not follow the required format." && \
         echo "Formatting rules: https://eclipse-score.github.io/score/main/contribute/general/git.html" && \
         echo -e "To fix your commit message, run:\n" && \
