@@ -24,7 +24,7 @@ jobs:
 
       - name: Lint YAML files
         shell: bash
-        run: yamllint -d "{extends: default, rules: {document-start: disable}}" .github/
+        run: yamllint .github/
 
       - name: Check github actions
         uses: docker://rhysd/actionlint:latest
